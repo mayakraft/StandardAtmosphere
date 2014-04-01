@@ -34,8 +34,7 @@ public
   void update(int altitude){
     h = altitude;
     if(h < 11000){ // meters, (36,089 ft)
-      T = T0 - 6.5 * (float)h / 1000.0;
-//    T = T0 - 1.98 * float(h) / 1000.0;  // in ft
+      T = T0 - 6.5 * (float)h / 1000.0; // T = T0 - 1.98 * float(h) / 1000.0;// in ft
       p = p0 * pow(1 - (0.0065 * h / (T0+273.15)), 5.2561 );
     }
     else{  // above the troposphere
@@ -47,13 +46,13 @@ public
     g = g0 * pow( (float)radiusEarth/(radiusEarth+h), 2);
   }
   void printStats(int xPos, int yPos){
-    text("speed of sound: " + a + " m/sec", xPos, yPos + 1*fontSize);
-    text("gravity: " + g + " m/sec^2", xPos, yPos + 2*fontSize);
+    text("speed of sound: " + String.format("%.3f", a) + " m/sec", xPos, yPos + 1*fontSize);
+    text("gravity: " + String.format("%.3f", g) + " m/sec^2", xPos, yPos + 2*fontSize);
     text("altitude: " + h + " m", xPos, yPos + 3*fontSize);
-    text("pressure: " + p + " hPa", xPos, yPos + 4*fontSize);
-    text("real gas constant: " + R + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
-    text("temperature: " + T + " C", xPos, yPos + 6*fontSize);
-    text("density: " + density + " units ??? kg/m^3", xPos, yPos + 7*fontSize);
+    text("pressure: " + String.format("%.3f", p) + " hPa", xPos, yPos + 4*fontSize);
+    text("real gas constant: " + String.format("%.3f", R) + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
+    text("temperature: " + String.format("%.3f", T) + " C", xPos, yPos + 6*fontSize);
+    text("density: " + String.format("%.3f", density) + " units ??? kg/m^3", xPos, yPos + 7*fontSize);
   }
 
 private
@@ -92,16 +91,17 @@ float NUMBER_E = 2.718281828;
 int radiusEarth = 6371000; // meters
 // graphics
 color skyColor, spaceColor;
-int fontSize = 12;
+int fontSize = 18;
 boolean mouseDown;
 int screenAltitude = 20000;
 
-StandardData mouseData, balloonData;
+StandardData mouseData;
 Balloon balloon;
   
 void setup(){
   // graphics
   size(800,600);
+  textSize(fontSize);
   skyColor = color(10, 10, 20);
   spaceColor = color(0, 102, 153);
   // atmosphere
@@ -147,7 +147,7 @@ void draw() {
 void printScale(){
   float spacer = (float)height/8.0;
   for(int i = 0; i < 8; i++){
-    text(int(3.28084*(float)screenAltitude/8.0*i) + " ft", width-70, height-5-i*spacer);
+    text(int(3.28084*(float)screenAltitude/8.0*i) + " ft", width-fontSize*5, height-5-i*spacer);
   }
 }
 void mousePressed(){
