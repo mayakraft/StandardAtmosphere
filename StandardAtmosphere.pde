@@ -10,6 +10,7 @@
 // gravity disregards latitude
 // http://en.wikipedia.org/wiki/Gravity_of_Earth
 //
+// robby kraft
 
 class StandardData{  
 public
@@ -73,23 +74,17 @@ private
   void update(){
     data.update(int(altitude));
     velocity = data.density - density;
-    altitude += velocity * 10000;  // FAKE
-//    println(altitude);
+    altitude += velocity * 2000;  // FAKE
   }
 }
 
 float NUMBER_E = 2.718281828;
-// 2008
-// display
+int radiusEarth = 6371000; // meters
+// graphics
 color skyColor, spaceColor;
 int fontSize = 12;
 boolean mouseDown;
-
 int screenAltitude = 20000;
-
-// more constants
-
-int radiusEarth = 6371000; // meters
 
 StandardData mouseData, balloonData;
 Balloon balloon;
@@ -104,7 +99,6 @@ void setup(){
   // balloon
   balloon = new Balloon();
 }
-
 
 void update(){
   balloon.update();
@@ -159,9 +153,7 @@ void mousePressed(){
 void mouseDragged(){
   mouseData.h = int(screenAltitude * (1.0-(float)mouseY/height));
   mouseData.update(mouseData.h);
-  
 }
-
 void mouseReleased(){
   mouseDown = false;
 }
