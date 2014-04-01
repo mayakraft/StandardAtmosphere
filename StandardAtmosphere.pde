@@ -46,13 +46,13 @@ public
     g = g0 * pow( (float)radiusEarth/(radiusEarth+h), 2);
   }
   void printStats(int xPos, int yPos){
-    text("speed of sound: " + String.format("%.3f", a) + " m/sec", xPos, yPos + 1*fontSize);
-    text("gravity: " + String.format("%.3f", g) + " m/sec^2", xPos, yPos + 2*fontSize);
+    text("speed of sound: " + (int(a*1000)/1000.0) + " m/sec", xPos, yPos + 1*fontSize);
+    text("gravity: " + (int(g*1000)/1000.0) + " m/sec^2", xPos, yPos + 2*fontSize);
     text("altitude: " + h + " m", xPos, yPos + 3*fontSize);
-    text("pressure: " + String.format("%.3f", p) + " hPa", xPos, yPos + 4*fontSize);
-    text("real gas constant: " + String.format("%.3f", R) + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
-    text("temperature: " + String.format("%.3f", T) + " C", xPos, yPos + 6*fontSize);
-    text("density: " + String.format("%.3f", density) + " units ??? kg/m^3", xPos, yPos + 7*fontSize);
+    text("pressure: " + (int(p*1000)/1000.0) + " hPa", xPos, yPos + 4*fontSize);
+    text("real gas constant: " + (int(R*1000)/1000.0) + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
+    text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 6*fontSize);
+    text("density: " + (int(density*100000)/100000.0) + " units ??? kg/m^3", xPos, yPos + 7*fontSize);
   }
 
 private
@@ -131,12 +131,12 @@ void draw() {
     stroke(255,255,255,100);
     line(0,mouseY,width,mouseY);
   }
+  printScale();
   balloon.data.printStats(10, 10);
   if(mouseDown){
     fill(255, 255, 255, 180);
-    mouseData.printStats(10, height-9*fontSize);
+    mouseData.printStats(10, height-8*fontSize);
   }
-  printScale();
   fill(255);
   color(255, 255, 255);
   stroke(0);
