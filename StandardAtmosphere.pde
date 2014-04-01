@@ -46,6 +46,16 @@ public
     a = 331 + ( 0.6 * T );
     g = g0 * pow( (float)radiusEarth/(radiusEarth+h), 2);
   }
+  void printStats(int xPos, int yPos){
+    text("speed of sound: " + a + " m/sec", xPos, yPos + 1*fontSize);
+    text("gravity: " + g + " m/sec^2", xPos, yPos + 2*fontSize);
+    text("altitude: " + h + " m", xPos, yPos + 3*fontSize);
+    text("pressure: " + p + " hPa", xPos, yPos + 4*fontSize);
+    text("real gas constant: " + R + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
+    text("temperature: " + T + " C", xPos, yPos + 6*fontSize);
+    text("density: " + density + " units ??? kg/m^3", xPos, yPos + 7*fontSize);
+  }
+
 private
   float a0 = 340.294;
   float g0 = 9.80665; 
@@ -121,7 +131,11 @@ void draw() {
     stroke(255,255,255,100);
     line(0,mouseY,width,mouseY);
   }
-  printStats();
+  balloon.data.printStats(10, 10);
+  if(mouseDown){
+    fill(255, 255, 255, 180);
+    mouseData.printStats(10, height-9*fontSize);
+  }
   printScale();
   fill(255);
   color(255, 255, 255);
@@ -130,20 +144,10 @@ void draw() {
   ellipse(width/2.0, height-height*balloon.altitude/(float)screenAltitude, 30, 30);
 }
 
-void printStats(){
-  text("speed of sound: " + mouseData.a + " m/sec", 10, 1*fontSize);
-  text("gravity: " + mouseData.g + " m/sec^2", 10, 2*fontSize);
-  text("altitude: " + mouseData.h + " m", 10, 3*fontSize);
-  text("pressure: " + mouseData.p + " hPa", 10, 4*fontSize);
-  text("real gas constant: " + mouseData.R + " m^2/Ksec^2", 10, 5*fontSize);
-  text("temperature: " + mouseData.T + " C", 10, 6*fontSize);
-  text("density: " + mouseData.density + " units ??? kg/m^3", 10, 7*fontSize);
-}
-
 void printScale(){
   float spacer = (float)height/8.0;
   for(int i = 0; i < 8; i++){
-    text(int(3.28084*(float)screenAltitude/8.0*i) + " ft", width-70, height-i*spacer);
+    text(int(3.28084*(float)screenAltitude/8.0*i) + " ft", width-70, height-5-i*spacer);
   }
 }
 void mousePressed(){
