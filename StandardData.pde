@@ -2,6 +2,8 @@
 float NUMBER_E = 2.718281828;
 int radiusEarth = 6371000; // meters, for calculating gravity
 
+// 0.014503773773, convert hPa to psi
+
 class StandardData{  
 public
   float a;  // speed of sound, m/sec
@@ -36,7 +38,7 @@ public
     text("speed of sound: " + (int(a*1000)/1000.0) + " m/sec", xPos, yPos + 1*fontSize);
     text("gravity: " + (int(g*1000)/1000.0) + " m/sec^2", xPos, yPos + 2*fontSize);
     text("altitude: " + h + " m", xPos, yPos + 3*fontSize);
-    text("pressure: " + (int(p*0.014503773773*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 4*fontSize);
+    text("pressure: " + (int(p*0.014504*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 4*fontSize);
 //    text("real gas constant: " + (int(R*1000)/1000.0) + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
     text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 5*fontSize);
     text("density: " + (int(density*100000)/100000.0) + " units ??? kg/m^3", xPos, yPos + 6*fontSize);

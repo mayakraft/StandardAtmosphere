@@ -40,7 +40,7 @@ void setup(){
 void update(){
   if(second != second()){
     second = second();
-    println(frameCount-lastFrameCount);
+//    println("Frame rate: " + frameCount-lastFrameCount);
     lastFrameCount = frameCount;
     balloon.updateSecondElapsed();
   }

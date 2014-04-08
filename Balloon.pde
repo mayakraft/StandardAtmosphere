@@ -18,6 +18,7 @@ private
     velocity = 0;
     acceleration = 0;
     density = .0012;//225;//0.001;
+    lastAltitude = altitude;
   }
   void updateSecondElapsed(){
     velocityPrint = altitude - lastAltitude;
@@ -30,7 +31,7 @@ private
     altitude += velocity;
   }
   void printStats(int xPos, int yPos){
-    text("velocity: " + velocityPrint + " m/s", xPos, yPos + 8*fontSize);
+    text("velocity: " + velocityPrint + " m/s", xPos, yPos + 7*fontSize);
   }
 }
 
