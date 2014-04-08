@@ -30,7 +30,7 @@ private
     velocity *= 2000;      // FAKE
     altitude += velocity;
   }
-  void printStats(int xPos, int yPos){
+  void logStats(int xPos, int yPos){
     text("velocity: " + velocityPrint + " m/s", xPos, yPos + 7*fontSize);
   }
 }

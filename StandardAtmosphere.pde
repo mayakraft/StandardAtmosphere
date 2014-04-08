@@ -18,7 +18,7 @@ int fontSize = 18;
 boolean mouseDown;
 int screenAltitude = 20000;
 // animation
-int second;
+int lastSecond, currentSecond;
 int lastFrameCount;
 
 StandardData mouseData;
@@ -38,9 +38,10 @@ void setup(){
 }
 
 void update(){
-  if(second != second()){
-    second = second();
-//    println("Frame rate: " + frameCount-lastFrameCount);
+  currentSecond = second();
+  if(lastSecond != currentSecond){
+    lastSecond = currentSecond;
+    println("Frames: " + (frameCount-lastFrameCount) + "/sec");
     lastFrameCount = frameCount;
     balloon.updateSecondElapsed();
   }
@@ -66,7 +67,7 @@ void draw() {
   }
   printScale();
   balloon.data.printStats(10, 10);
-  balloon.printStats(10, 10);
+  balloon.logStats(10, 10);
   if(mouseDown){
     fill(255, 255, 255, 180);
     mouseData.printStats(10, height-8*fontSize);
