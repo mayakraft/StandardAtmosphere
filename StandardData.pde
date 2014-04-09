@@ -8,7 +8,7 @@ class StandardData{
 public
   float a;  // speed of sound, m/sec
   float g;  // acceleration of gravity m/sec^2
-  int h = 0;  // altitude, m or ft
+  float h = 0;  // altitude, m or ft
   float p;  // pressure, (101325 N/m^2) or (1013.25 hPa)
   float T;  // C (288.15 in K)  // K or C
   float density; // density, kg/m^3
@@ -20,7 +20,7 @@ public
       p = p0;   T = T0;   a = a0;
       g = g0;   density = density0;
   }
-  void update(int altitude){
+  void update(float altitude){
     h = altitude;
     if(h < 11000){ // meters, (36,089 ft)
       T = T0 - 6.5 * (float)h / 1000.0; // T = T0 - 1.98 * float(h) / 1000.0;// in ft
@@ -35,13 +35,13 @@ public
     g = g0 * pow( (float)radiusEarth/(radiusEarth+h), 2);
   }
   void printStats(int xPos, int yPos){
-    text("speed of sound: " + (int(a*1000)/1000.0) + " m/sec", xPos, yPos + 1*fontSize);
-    text("gravity: " + (int(g*1000)/1000.0) + " m/sec^2", xPos, yPos + 2*fontSize);
-    text("altitude: " + h + " m", xPos, yPos + 3*fontSize);
-    text("pressure: " + (int(p*0.014504*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 4*fontSize);
-//    text("real gas constant: " + (int(R*1000)/1000.0) + " m^2/Ksec^2", xPos, yPos + 5*fontSize);
-    text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 5*fontSize);
-    text("density: " + (int(density*100000)/100000.0) + " units ??? kg/m^3", xPos, yPos + 6*fontSize);
+    text("altitude: " + (int(h*10)/10.0) + " m  " + (int(h*32.808)/10.0) + " ft", xPos, yPos + 1*fontSize);
+    text("pressure: " + (int(p*0.014504*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 2*fontSize);
+    text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 3*fontSize);
+    text("density: " + (int(density*100000)/1000.0) + " kg/m^3", xPos, yPos + 4*fontSize);
+    text("gravity: " + (int(g*1000)/1000.0) + " m/sec^2", xPos, yPos + 5*fontSize);
+    text("speed of sound: " + (int(a*1000)/1000.0) + " m/sec", xPos, yPos + 6*fontSize);
+//    text("real gas constant: " + (int(R*1000)/1000.0) + " m^2/Ksec^2", xPos, yPos + 7*fontSize);
   }
 
 private

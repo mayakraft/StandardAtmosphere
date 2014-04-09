@@ -20,9 +20,11 @@ int screenAltitude = 20000;
 // animation
 int lastSecond, currentSecond;
 int lastFrameCount;
+int fps; // frames per second, required for velocity calculations
 
 StandardData mouseData;
-Balloon balloon;
+//Balloon balloon;
+HotAirBalloon balloon;
   
 void setup(){
   frameRate(15);
@@ -34,18 +36,19 @@ void setup(){
   // atmosphere
   mouseData = new StandardData();
   // balloon
-  balloon = new Balloon();
+  balloon = new HotAirBalloon();
 }
 
 void update(){
   currentSecond = second();
   if(lastSecond != currentSecond){
     lastSecond = currentSecond;
-    println("Frames: " + (frameCount-lastFrameCount) + "/sec");
+    fps = (frameCount-lastFrameCount);
+//    println("Frames: " + fps + "/sec");
     lastFrameCount = frameCount;
     balloon.updateSecondElapsed();
   }
-  balloon.update();
+  balloon.update(fps);
 }
 
 void draw() {
@@ -66,7 +69,6 @@ void draw() {
     line(0,mouseY,width,mouseY);
   }
   printScale();
-  balloon.data.printStats(10, 10);
   balloon.logStats(10, 10);
   if(mouseDown){
     fill(255, 255, 255, 180);
@@ -95,4 +97,13 @@ void mouseDragged(){
 }
 void mouseReleased(){
   mouseDown = false;
+}
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == UP) {
+      balloon.velocity+=.1;
+    } else if (keyCode == DOWN) {
+      balloon.velocity-=.1;
+    } 
+  }
 }
