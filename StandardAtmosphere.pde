@@ -20,7 +20,7 @@ int screenAltitude = 20000;
 // animation
 int lastSecond, currentSecond;
 int lastFrameCount;
-int fps; // frames per second, required for velocity calculations
+int fps; // calculated last second's frames per second, required for velocity calculations
 
 StandardData mouseData;
 //Balloon balloon;
@@ -56,12 +56,14 @@ void draw() {
   background(0);
   noFill();
   strokeWeight(1);
-  for (int i = 0; i <= height; i++) {
+  for (int i = 0; i < height; i++) {
     float inter = map(i, 0, height, 0, 1);
     color c = lerpColor(skyColor, spaceColor, inter);
     stroke(c);
     line(0, i, width, i);
   } 
+  stroke(0,150, 50);
+  line(0,height-1,width,height-1);
   if(mouseDown){
     stroke(255,255,255,10);
     line(mouseX,0,mouseX,height);
@@ -76,6 +78,10 @@ void draw() {
   }
   fill(255);
   color(255, 255, 255);
+  stroke(255);
+  strokeWeight(1);
+  line(width/2.0-22, height-height*balloon.altitude/(float)screenAltitude,
+       width/2.0+22, height-height*balloon.altitude/(float)screenAltitude);
   stroke(0);
   strokeWeight(6);
   ellipse(width/2.0, height-height*balloon.altitude/(float)screenAltitude, 30, 30);
@@ -83,9 +89,21 @@ void draw() {
 
 void printScale(){
   float spacer = (float)height/8.0;
+  stroke(255, 255, 255, 50);
+  strokeWeight(1);
   for(int i = 0; i < 8; i++){
-    text(int(3.28084*(float)screenAltitude/8.0*i) + " ft", width-fontSize*5, height-5-i*spacer);
+    text(int((float)screenAltitude/8.0*i) + "m  ("+ int(3.28084*(float)screenAltitude/8.0*i) + "ft)", width-fontSize*10, height-5-i*spacer);
+    //20000
+    line(0,height-i*spacer,
+         width,height-i*spacer );
+    for(int j = 0; j < 10; j++){
+      if(j%5 == 0) stroke(255, 100);
+      else stroke(255, 20);
+      line(width*.5-24, height-i*spacer - j*(spacer/10.0),
+           width*.5+24, height-i*spacer - j*(spacer/10.0));
+    }
   }
+  
 }
 void mousePressed(){
   mouseDown = true;
