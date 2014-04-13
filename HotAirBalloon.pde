@@ -37,7 +37,7 @@ private
     if(velocity < 0){
       text("velocity: ", xPos, yPos + 7*fontSize);
       fill(255,255,0);
-      text((int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos + 4.2*fontSize, yPos + 7*fontSize);
+      text((int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos + 4*fontSize, yPos + 7*fontSize);
     }
     else
       text("velocity: " + (int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos, yPos + 7*fontSize);

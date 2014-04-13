@@ -1,7 +1,5 @@
 # standard atmosphere model
 
-balloon launch simulation:
-
 * pressure
 * temperature
 * air density
@@ -18,6 +16,8 @@ update(float altitude);  // get data at altitude
 ```
 
 # balloons
+
+balloon flight simulator
 
 ``` processing
 // uncontrolled ascent-rate

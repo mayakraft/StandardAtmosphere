@@ -24,6 +24,9 @@ boolean pause;
 int lastSecond, currentSecond;
 int lastFrameCount;
 long elapsedSeconds;
+long MET0 = 0;
+long MET = 0;
+boolean METimer = false;
 int fps; // calculated last second's frames per second, required for velocity calculations
 
 // recording
@@ -64,15 +67,18 @@ void setupAnimation(){
   balloon = new HotAirBalloon();
   pause = true;
   elapsedSeconds = 0;
+  MET = 0;
+  MET0 = 0;
+  METimer = false;
 }
 
 void update(){
   currentSecond = second();
   if(lastSecond != currentSecond){
-    if(!pause){
-      elapsedSeconds++;
-    }
     lastSecond = currentSecond;
+    // timers
+    if(!pause) elapsedSeconds++;
+    if(METimer) MET++;
     fps = (frameCount-lastFrameCount);
 //    println("Frames: " + fps + "/sec");
     lastFrameCount = frameCount;
@@ -81,7 +87,7 @@ void update(){
     if(dataIndex != int(elapsedSeconds/DATA_FREQ)){
       dataIndex = int(elapsedSeconds/DATA_FREQ);
       altitudeData[dataIndex] = balloon.altitude;
-      println(pause + " " + elapsedSeconds + " " + dataIndex + " " + altitudeData[dataIndex]);
+//      println(pause + " " + elapsedSeconds + " " + dataIndex + " " + altitudeData[dataIndex]);
     }
   }
   balloon.update(fps);
@@ -113,9 +119,15 @@ void draw() {
     line(0,mouseY,width,mouseY);
   }
   printScale();
-  balloon.logStats(10, 10);
-  fill(0, 102, 153);
-  printTime(width-6*fontSize*2, 40);
+  balloon.logStats(fontSize, fontSize);
+  if(METimer) fill(0, 102, 153);
+  else fill(0, 102, 153, 100);
+  printTime(int(MET+MET0), width-6*fontSize*2, 40);
+  if(!pause) fill(255);
+  else fill(255, 100);
+  printTime(int(elapsedSeconds), width*.5-2.8*fontSize*2, 40);
+  fill(255, 150);
+  printETA();
   if(mouseDown){
     fill(255, 255, 255, 180);
     mouseData.printStats(10, height-8*fontSize);
@@ -142,14 +154,14 @@ void draw() {
     ellipse(width*.1+width*.8*((float)dataIndex/NUM_DATA), height-height*balloon.altitude/(float)screenAltitude, 8, 8);
   }
 }
-void printTime(float xPos, float yPos){
+void printTime(int sec, float xPos, float yPos){
   String ss = "";
   String sm = "";
   String sh = "";
   textSize(fontSize*retinaScale*2);
-  int _seconds = int(elapsedSeconds % 60);
-  int _minutes = int(elapsedSeconds/60.0);
-  int _hours = int(elapsedSeconds/3600.0);
+  int _seconds = int(sec % 60);
+  int _minutes = int(sec/60.0);
+  int _hours = int(sec/3600.0);
   if(_seconds < 10) ss = "0";
   if(_minutes < 10) sm = "0";
   if(_hours < 10) sh = "0";
@@ -170,6 +182,32 @@ void printScale(){
 //      if(j%5 == 0) stroke(255, 100);
       line(width*.5-24, height-i*spacer - j*(spacer/5.0)-1,
            width*.5+24, height-i*spacer - j*(spacer/5.0)-1);
+    }
+  }
+}
+void printETA(){
+  float spacer = (float)height/8.0;
+  String ss, sm;
+  if(balloon.velocity > 0.01){
+    for(int i = 0; i < 8; i++){
+      float target = int((float)screenAltitude/8.0*i);
+      if(target > balloon.altitude){
+        sm = "";
+        ss = "";
+        int _min = int(((target-balloon.altitude)/balloon.velocity)/60.0);
+        int _sec = int(((target-balloon.altitude)/balloon.velocity)%60);
+        if(_min < 10) sm = "0";
+        if(_sec < 10) ss = "0";
+        text("(" + sm + _min + ":" + ss + _sec + ")", 
+              width-17*fontSize, height-5-i*spacer);
+      }
+    }
+  }
+  else if(balloon.velocity < -.01){
+    for(int i = 0; i < 8; i++){
+      float target = int((float)screenAltitude/8.0*i);
+      if(target < balloon.altitude)
+      text("(" + -int((balloon.altitude-target)/balloon.velocity/6.0)/10.0 + " min)", width-17*fontSize, height-5-i*spacer);
     }
   }
 }
@@ -202,4 +240,14 @@ void keyPressed() {
     // balloon
     setupAnimation();
   }    
+  if(key == ' '){
+    if(!METimer){
+      METimer = true;
+      MET0+=MET;
+      MET = 0;
+    }
+    else if(METimer){
+      METimer = false;
+    }
+  }
 }

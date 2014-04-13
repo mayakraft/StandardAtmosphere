@@ -36,8 +36,8 @@ public
   }
   void printStats(int xPos, int yPos){
     text("altitude: " + (int(h*10)/10.0) + " m  " + (int(h*32.808)/10.0) + " ft", xPos, yPos + 1*fontSize);
-    text("pressure: " + (int(p*0.014504*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 2*fontSize);
-    text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 3*fontSize);
+    text("temperature: " + (int(T*1000)/1000.0) + " C", xPos, yPos + 2*fontSize);
+    text("pressure: " + (int(p*0.014504*1000)/1000.0) + " psi (" + (int(p*1000)/1000.0) + " hPa)" , xPos, yPos + 3*fontSize);
     text("density: " + (int(density*100000)/1000.0) + " kg/m^3", xPos, yPos + 4*fontSize);
     text("gravity: " + (int(g*1000)/1000.0) + " m/sec^2", xPos, yPos + 5*fontSize);
     text("speed of sound: " + (int(a*1000)/1000.0) + " m/sec", xPos, yPos + 6*fontSize);
