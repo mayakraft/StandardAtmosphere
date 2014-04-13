@@ -1,18 +1,36 @@
 # standard atmosphere model
 
-balloon launch simulation
+balloon launch simulation calculates:
 
-``` processing
-float a;  // speed of sound, m/sec
-float g;  // acceleration of gravity m/sec^2
-float p;  // pressure, (101325 N/m^2) or (1013.25 hPa)
-float T;  // C (288.15 in K)  // K or C
-float density;  // density, kg/m^3
-```
+* pressure
+* temperature
+* air density
+* gravity
+* speed of sound
+
+at any altitude < 60,000 ft
 
 # methods
 
 ``` processing
-balloon = new Balloon();
-balloon.update(altitude);
+//StandardData
+update(float altitude);  // get data at altitude
 ```
+
+# balloons
+
+``` processing
+// uncontrolled ascent-rate
+Balloon();
+balloon.update();
+
+// controlled ascent-rate
+HotAirBalloon();
+hotAirBalloon.setVelocity(v);
+```
+
+# controls
+
+`p` pop balloon, begin fall to -55m/s terminal velocity
+`q` reset
+`△` `▽` increase/decrease hot-air ascent

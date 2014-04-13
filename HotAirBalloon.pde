@@ -1,6 +1,8 @@
 
 class HotAirBalloon{
 public
+boolean popped;
+  float acceleration;
   float velocity;
   StandardData data;
   float position;
@@ -10,9 +12,14 @@ private
   float velocityPrint;
   HotAirBalloon(){
     data = new StandardData();
+    popped = false;
     altitude = 0;
     velocity = 0;
+    acceleration = 0;
     lastAltitude = altitude;
+  }
+  void setVelocity(float v){
+    velocity = v;
   }
   void updateSecondElapsed(){
     velocityPrint = altitude - lastAltitude;
@@ -21,7 +28,14 @@ private
   void update(int fps){  // frames per second
     data.update(altitude);
 //    velocity = data.density - density;
-    altitude += velocity / fps;
+    velocity += acceleration / fps;
+    if(velocity < -55) velocity = -55;
+      altitude += velocity / fps;
+    if(altitude < 0){
+      altitude = 0;
+      velocity = 0;
+      acceleration = 0;
+    }
   }
   void logStats(int xPos, int yPos){
     data.printStats(xPos, yPos);

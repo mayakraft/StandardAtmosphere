@@ -12,6 +12,8 @@
 //
 // robby kraft
 
+int retinaScale = 1; // 2
+
 // graphics
 color skyColor, spaceColor;
 int fontSize = 18;
@@ -29,8 +31,15 @@ HotAirBalloon balloon;
 void setup(){
   frameRate(15);
   // graphics
-  size(800,600);
-  textSize(fontSize);
+  if(retinaScale > 1){
+    // Apple retina screen support
+    size(800,600, "processing.core.PGraphicsRetina2D");
+    hint(ENABLE_RETINA_PIXELS); // improve rendering quality with pixel operations
+  }
+  else{
+    size(800,600);
+  }
+  textSize(fontSize*retinaScale);
   skyColor = color(10, 10, 20);
   spaceColor = color(0, 102, 153);
   // atmosphere
@@ -65,8 +74,8 @@ void draw() {
   stroke(0,150, 50);
   line(0,height-1,width,height-1);
   if(mouseDown){
-    stroke(255,255,255,10);
-    line(mouseX,0,mouseX,height);
+//    stroke(255,255,255,10);
+//    line(mouseX,0,mouseX,height);
     stroke(255,255,255,100);
     line(0,mouseY,width,mouseY);
   }
@@ -83,8 +92,14 @@ void draw() {
   line(width/2.0-22, height-height*balloon.altitude/(float)screenAltitude,
        width/2.0+22, height-height*balloon.altitude/(float)screenAltitude);
   stroke(0);
-  strokeWeight(6);
-  ellipse(width/2.0, height-height*balloon.altitude/(float)screenAltitude, 30, 30);
+  if(!balloon.popped){
+    strokeWeight(6);
+    ellipse(width/2.0, height-height*balloon.altitude/(float)screenAltitude, 30, 30);
+  }
+  else{
+    strokeWeight(3);
+    ellipse(width/2.0, height-height*balloon.altitude/(float)screenAltitude, 8, 8);
+  }
 }
 
 void printScale(){
@@ -94,34 +109,42 @@ void printScale(){
   for(int i = 0; i < 8; i++){
     text(int((float)screenAltitude/8.0*i) + "m  ("+ int(3.28084*(float)screenAltitude/8.0*i) + "ft)", width-fontSize*10, height-5-i*spacer);
     //20000
-    line(0,height-i*spacer,
-         width,height-i*spacer );
-    for(int j = 0; j < 10; j++){
-      if(j%5 == 0) stroke(255, 100);
-      else stroke(255, 20);
-      line(width*.5-24, height-i*spacer - j*(spacer/10.0),
-           width*.5+24, height-i*spacer - j*(spacer/10.0));
+    line(0,height-i*spacer-1,
+         width,height-i*spacer-1 );
+    stroke(255, 50);
+    for(int j = 1; j < 5; j++){
+//      if(j%5 == 0) stroke(255, 100);
+      line(width*.5-24, height-i*spacer - j*(spacer/5.0)-1,
+           width*.5+24, height-i*spacer - j*(spacer/5.0)-1);
     }
   }
-  
 }
 void mousePressed(){
   mouseDown = true;
   mouseDragged();
 }
 void mouseDragged(){
-  mouseData.h = int(screenAltitude * (1.0-(float)mouseY/height));
+  mouseData.h = int(screenAltitude * (1.0-(float)(mouseY+1)/height));
   mouseData.update(mouseData.h);
 }
 void mouseReleased(){
   mouseDown = false;
 }
 void keyPressed() {
-  if (key == CODED) {
+  if (key == CODED && !balloon.popped) {
     if (keyCode == UP) {
       balloon.velocity+=.1;
     } else if (keyCode == DOWN) {
       balloon.velocity-=.1;
     } 
   }
+  if(key == 'p' || key == 'P'){
+    balloon.popped = true;
+    balloon.acceleration = -9.8;
+  }
+  if(key == 'q' || key == 'Q'){
+//    mouseData = new StandardData();
+    // balloon
+    balloon = new HotAirBalloon();
+  }    
 }
