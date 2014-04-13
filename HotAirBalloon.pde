@@ -31,15 +31,16 @@ private
     velocity += acceleration / fps;
     if(velocity < -55) velocity = -55;
       altitude += velocity / fps;
-    if(altitude < 0){
-      altitude = 0;
-      velocity = 0;
-      acceleration = 0;
-    }
   }
   void logStats(int xPos, int yPos){
     data.printStats(xPos, yPos);
-    text("velocity: " + (int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos, yPos + 7*fontSize);
+    if(velocity < 0){
+      text("velocity: ", xPos, yPos + 7*fontSize);
+      fill(255,255,0);
+      text((int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos + 4.2*fontSize, yPos + 7*fontSize);
+    }
+    else
+      text("velocity: " + (int(velocity*10)/10.0) + " m/s  " + (int(velocity*3.2808*10)/10.0) + "ft/s", xPos, yPos + 7*fontSize);
   }
 }
 

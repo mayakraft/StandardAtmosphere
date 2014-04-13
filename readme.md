@@ -1,6 +1,6 @@
 # standard atmosphere model
 
-balloon launch simulation calculates:
+balloon launch simulation:
 
 * pressure
 * temperature
@@ -32,5 +32,7 @@ hotAirBalloon.setVelocity(v);
 # controls
 
 `p` pop balloon, begin fall to -55m/s terminal velocity
+
 `q` reset
+
 `△` `▽` increase/decrease hot-air ascent
