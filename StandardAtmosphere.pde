@@ -125,7 +125,7 @@ void draw() {
   printTime(int(MET+MET0), width-6*fontSize*2, 40);
   if(!pause) fill(255);
   else fill(255, 100);
-  printTime(int(elapsedSeconds), width*.5-2.8*fontSize*2, 40);
+  printTime(int(elapsedSeconds), width*.5-2.5*fontSize*2, 40);
   fill(255, 150);
   printETA();
   if(mouseDown){
@@ -142,8 +142,8 @@ void draw() {
          width*.1+width*.8*((float)(i+1)/NUM_DATA), 
          height-height*altitudeData[i+1]/(float)screenAltitude);
   }
-  line(width*.1+width*.8*((float)dataIndex/NUM_DATA)-22, height-height*balloon.altitude/(float)screenAltitude,
-       width*.1+width*.8*((float)dataIndex/NUM_DATA)+22, height-height*balloon.altitude/(float)screenAltitude);
+  line(width*.5-24, height-height*balloon.altitude/(float)screenAltitude,
+       width*.5+24, height-height*balloon.altitude/(float)screenAltitude);
   stroke(0);
   if(!balloon.popped){
     strokeWeight(6);
