@@ -30,10 +30,10 @@ boolean METimer = false;
 int fps; // calculated last second's frames per second, required for velocity calculations
 
 // recording
-int NUM_DATA = 6*60;
+float DATA_FREQ = 10; // 10 seconds between data points
+int NUM_DATA = int(60*60*3/DATA_FREQ);  // (seconds) * (minutes) * numHours
 float[] altitudeData = new float[NUM_DATA];
 int dataIndex = 0;
-float DATA_FREQ = 10; // 10 seconds between data points
 
 StandardData mouseData;
 //Balloon balloon;
@@ -83,10 +83,10 @@ void update(){
 //    println("Frames: " + fps + "/sec");
     lastFrameCount = frameCount;
     balloon.updateSecondElapsed();
-    altitudeData[dataIndex] = balloon.altitude;
+    altitudeData[dataIndex%NUM_DATA] = balloon.altitude;
     if(dataIndex != int(elapsedSeconds/DATA_FREQ)){
       dataIndex = int(elapsedSeconds/DATA_FREQ);
-      altitudeData[dataIndex] = balloon.altitude;
+      altitudeData[dataIndex%NUM_DATA] = balloon.altitude;
 //      println(pause + " " + elapsedSeconds + " " + dataIndex + " " + altitudeData[dataIndex]);
     }
   }
@@ -138,9 +138,9 @@ void draw() {
   strokeWeight(1);
   for(int i = 0; i < dataIndex; i++){
     line(width*.1+width*.8*((float)i/NUM_DATA), 
-         height-height*altitudeData[i]/(float)screenAltitude,
+         height-height*altitudeData[i%NUM_DATA]/(float)screenAltitude,
          width*.1+width*.8*((float)(i+1)/NUM_DATA), 
-         height-height*altitudeData[i+1]/(float)screenAltitude);
+         height-height*altitudeData[(i+1)%NUM_DATA]/(float)screenAltitude);
   }
   line(width*.5-24, height-height*balloon.altitude/(float)screenAltitude,
        width*.5+24, height-height*balloon.altitude/(float)screenAltitude);
