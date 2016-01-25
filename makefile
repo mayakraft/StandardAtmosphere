@@ -18,5 +18,8 @@ ifeq ($(OSTYPE),darwin)
 	LDFLAGS = -framework Carbon -framework OpenGL -framework GLUT  -Wno-deprecated
 endif
 
-$(EXE) : example.c
+$(EXE): example.c
 	gcc -o $@ $< $(CFLAGS) $(LDFLAGS)
+
+run:
+	./$(EXE) $(ARGS)

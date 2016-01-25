@@ -1,25 +1,18 @@
 #include <stdio.h>
-#include "standard_atmosphere.c"
+#include "standard_atmosphere.h"
 
 void printAtmosphere(atmosphere a){
-    // omitting speed of sound, because I don't need it
-    printf("Temp:(%.3f °C) Press:(%.3f psi) Dens:(%.3f kg/m^3) Grav:(%.3f m/s^2)", a.temperature, a.pressure, a.density, a.gravity);
+    printf(" - Temperature:(%.3f °C)\n - Pressure:(%.3f psi)\n - Density:(%.3f kg/m³)\n - Gravity:(%.3f m/s²)\n - Speed of sound:(%.3f m/s)\n", a.temperature, a.pressure, a.density, a.gravity, a.speed_of_sound);
 }
 
 int main(){
-    atmosphere a;
-
-    a = atmosphereAtAltitude(0);
-    printf("\nSea level: 0m\n  ");
+    atmosphere a = atmosphereAtAltitude(0);
+    printf("\nSea level: 0m\n");
     printAtmosphere(a);
 
-    a = atmosphereAtAltitude(3650);
-    printf("\nLa Paz, Bolivia: 3,650m\n  ");
-    printAtmosphere(a);
+    printf("\nLa Paz, Bolivia: 3,650m\n");
+    printAtmosphere( atmosphereAtAltitude(3650) );
 
-    a = atmosphereAtAltitude(8850);
-    printf("\nMt. Everest: 8,850m\n  ");
-    printAtmosphere(a);
-
-    printf("\n\n");
+    printf("\nMt. Everest: 8,850m\n");
+    printAtmosphere( atmosphereAtAltitude(8850) );
 }

@@ -1,6 +1,6 @@
 # international standard atmosphere
 
-atmosphere data for an altitude in meters (range 0 to 20,000)
+a model of atmosphere conditions over a wide range of altitudes (valid between sea level and +20,000 meters)
 
 # input
 
@@ -21,7 +21,7 @@ double  speed_of_sound; // m/sec
 # methods
 
 ```c
-// composite
+// all at once
 atmosphere atmosphereAtAltitude(double altitude);
 
 // individual
@@ -34,23 +34,36 @@ double speedOfSoundAtAltitude(double altitude);
 
 # example
 
-type `make`
+type `make` then `make run`
 
-```c
-Sea level: 0m
-  Temp:(15.000 °C) Press:(14.696 psi) Dens:(1.225 kg/m^3) Grav:(9.807 m/s^2)
-La Paz, Bolivia: 3,650m
-  Temp:(-8.725 °C) Press:(9.355 psi) Dens:(0.850 kg/m^3) Grav:(9.795 m/s^2)
-Mt. Everest: 8,850m
-  Temp:(-42.525 °C) Press:(4.559 psi) Dens:(0.475 kg/m^3) Grav:(9.779 m/s^2)
 ```
+Sea level: 0m
+ - Temperature:(15.000 °C)
+ - Pressure:(14.696 psi)
+ - Density:(1.225 kg/m³)
+ - Gravity:(9.807 m/s²)
+ - Speed of sound:(340.000 m/s)
 
+La Paz, Bolivia: 3,650m
+ - Temperature:(-8.725 °C)
+ - Pressure:(9.355 psi)
+ - Density:(0.850 kg/m³)
+ - Gravity:(9.795 m/s²)
+ - Speed of sound:(325.765 m/s)
+
+Mt. Everest: 8,850m
+ - Temperature:(-42.525 °C)
+ - Pressure:(4.559 psi)
+ - Density:(0.475 kg/m³)
+ - Gravity:(9.779 m/s²)
+ - Speed of sound:(305.485 m/s)
+```
 
 # sources
 
 [International Standard Atmosphere, Mustafa Cavcar](http://fisicaatmo.at.fcen.uba.ar/practicas/ISAweb.pdf)
 
-various wikipedia pages
+wikipedia
 
 # license
 
